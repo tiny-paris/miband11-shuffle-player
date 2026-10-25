@@ -1,0 +1,24 @@
+name: Lua player tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        lua: [lua5.1, lua5.4, luajit]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Install Lua runtime
+        run: sudo apt-get update && sudo apt-get install -y "${{ matrix.lua }}"
+      - name: Run regression tests
+        env:
+          LUA: ${{ matrix.lua }}
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python3 -m unittest discover -s tests -v

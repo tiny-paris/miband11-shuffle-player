@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+dist/
+.venv/
+*.face
+*.mp4
+*.zip
